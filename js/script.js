@@ -218,38 +218,30 @@ function showNotification(message, type) {
 // Typing Animation for Hero Title
 function typeWriter(element, text, speed = 100) {
     let i = 0;
-    element.innerHTML = '';
+    let currentText = '';
     
-    // Parse the text to handle HTML tags
-    const tempDiv = document.createElement('div');
-    tempDiv.innerHTML = text;
+    // Find where "Nicholas Cho" starts in the text
+    const highlightText = "Nicholas Cho";
+    const beforeHighlight = "Hello, I'm ";
     
-    // Get the text content and identify where the highlight should be
-    const fullText = tempDiv.textContent;
-    const highlightText = tempDiv.querySelector('.highlight')?.textContent || '';
-    const highlightStart = fullText.indexOf(highlightText);
-    const highlightEnd = highlightStart + highlightText.length;
-    
-    function type() {
-        if (i < fullText.length) {
-            if (i === highlightStart) {
-                // Start the highlight span
-                element.innerHTML += '<span class="highlight">';
-            }
-            
-            element.innerHTML += fullText.charAt(i);
-            
-            if (i === highlightEnd - 1) {
-                // Close the highlight span
-                element.innerHTML += '</span>';
-            }
-            
-            i++;
+    if (i < text.length) {
+        currentText += text.charAt(i);
+        
+        // Check if we've reached the highlight part
+        if (currentText === beforeHighlight) {
+            element.innerHTML = currentText + '<span class="highlight">' + highlightText + '</span>';
+            i = text.length; // Skip to end since we've added everything
+        } else if (i < beforeHighlight.length) {
+            element.innerHTML = currentText;
+        }
+        
+        i++;
+        
+        if (i < text.length) {
             setTimeout(type, speed);
         }
     }
-    
-    type();
+
 }
 
 window.addEventListener('load', () => {
