@@ -113,6 +113,7 @@ body {
     min-height: 100vh;
     display: flex;
     align-items: center;
+    justify-content: center;
     padding: 0 20px;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
@@ -121,10 +122,15 @@ body {
 .hero-content {
     max-width: 1200px;
     margin: 0 auto;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4rem;
+    display: flex;
+    flex-direction: column;
     align-items: center;
+    text-align: center;
+    gap: 3rem;
+}
+
+.hero-text {
+    max-width: 800px;
 }
 
 .hero-title {
@@ -148,12 +154,16 @@ body {
     font-size: 1.1rem;
     margin-bottom: 2rem;
     opacity: 0.8;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .hero-buttons {
     display: flex;
     gap: 1rem;
     flex-wrap: wrap;
+    justify-content: center;
 }
 
 .btn {
@@ -197,17 +207,22 @@ body {
 }
 
 .placeholder-avatar {
-    width: 300px;
-    height: 300px;
+    width: 250px;
+    height: 250px;
     background: rgba(255, 255, 255, 0.1);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 5rem;
+    font-size: 4rem;
     color: rgba(255, 255, 255, 0.7);
     backdrop-filter: blur(10px);
-    border: 2px solid rgba(255, 255, 255, 0.2);
+    border: 3px solid rgba(255, 255, 255, 0.2);
+    transition: transform 0.3s ease;
+}
+
+.placeholder-avatar:hover {
+    transform: scale(1.05);
 }
 
 /* Section Styles */
