@@ -303,16 +303,32 @@ function createScrollToTopButton() {
 // Initialize scroll-to-top button
 document.addEventListener('DOMContentLoaded', createScrollToTopButton);
 
-// Parallax effect for hero section
+// Enhanced Parallax effect for hero section background
 window.addEventListener('scroll', () => {
     const scrolled = window.pageYOffset;
     const hero = document.querySelector('.hero');
+    const navbar = document.querySelector('.navbar');
+    
+    // Parallax effect for hero background
     if (hero) {
-        hero.style.transform = `translateY(${scrolled * 0.5}px)`;
+        // Create a slower moving background effect
+        const parallaxSpeed = 0.5;
+        hero.style.transform = `translateY(${scrolled * parallaxSpeed}px)`;
+        
+        // Optional: Add a subtle scaling effect as you scroll
+        const scaleEffect = 1 + (scrolled * 0.0002);
+        hero.style.backgroundSize = `${100 * scaleEffect}% ${100 * scaleEffect}%`;
+    }
+    
+    // Enhanced navbar background on scroll
+    if (scrolled > 50) {
+        navbar.style.background = 'rgba(255, 255, 255, 0.98)';
+        navbar.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.1)';
+    } else {
+        navbar.style.background = 'rgba(255, 255, 255, 0.95)';
+        navbar.style.boxShadow = 'none';
     }
 });
-
-// Add loading animation
 window.addEventListener('load', () => {
     const loader = document.createElement('div');
     loader.className = 'loader';
