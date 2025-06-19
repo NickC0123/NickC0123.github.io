@@ -220,18 +220,31 @@ function typeWriter(element, text, speed = 100) {
     let i = 0;
     element.innerHTML = '';
     
+    // Parse the text to handle HTML tags
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML = text;
+    
+    // Get the text content and identify where the highlight should be
+    const fullText = tempDiv.textContent;
+    const highlightText = tempDiv.querySelector('.highlight')?.textContent || '';
+    const highlightStart = fullText.indexOf(highlightText);
+    const highlightEnd = highlightStart + highlightText.length;
+    
     function type() {
-        if (i < text.length) {
-            if (text.substr(i, 19) === '<span class="highlight">') {
-                // Handle the span tag
-                const closingIndex = text.indexOf('</span>', i);
-                const spanContent = text.substring(i, closingIndex + 7);
-                element.innerHTML += spanContent;
-                i = closingIndex + 7;
-            } else {
-                element.innerHTML += text.charAt(i);
-                i++;
+        if (i < fullText.length) {
+            if (i === highlightStart) {
+                // Start the highlight span
+                element.innerHTML += '<span class="highlight">';
             }
+            
+            element.innerHTML += fullText.charAt(i);
+            
+            if (i === highlightEnd - 1) {
+                // Close the highlight span
+                element.innerHTML += '</span>';
+            }
+            
+            i++;
             setTimeout(type, speed);
         }
     }
