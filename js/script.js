@@ -303,21 +303,20 @@ function createScrollToTopButton() {
 // Initialize scroll-to-top button
 document.addEventListener('DOMContentLoaded', createScrollToTopButton);
 
-// Enhanced Parallax effect for hero section background
+// Enhanced Parallax effect for hero section background only
 window.addEventListener('scroll', () => {
     const scrolled = window.pageYOffset;
     const hero = document.querySelector('.hero');
     const navbar = document.querySelector('.navbar');
     
-    // Parallax effect for hero background
+    // Parallax effect for hero background only (keeps content aligned)
     if (hero) {
-        // Create a slower moving background effect
-        const parallaxSpeed = 0.5;
-        hero.style.transform = `translateY(${scrolled * parallaxSpeed}px)`;
-        
-        // Optional: Add a subtle scaling effect as you scroll
-        const scaleEffect = 1 + (scrolled * 0.0002);
-        hero.style.backgroundSize = `${100 * scaleEffect}% ${100 * scaleEffect}%`;
+        const heroRect = hero.getBoundingClientRect();
+        // Only apply parallax when hero section is visible
+        if (heroRect.bottom > 0 && heroRect.top < window.innerHeight) {
+            const parallaxSpeed = 0.3; // Reduced for subtler effect
+            hero.style.setProperty('--parallax-offset', `${scrolled * parallaxSpeed}px`);
+        }
     }
     
     // Enhanced navbar background on scroll
