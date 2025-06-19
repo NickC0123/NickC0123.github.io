@@ -219,21 +219,9 @@ function showNotification(message, type) {
 function typeWriter(element, text, speed = 100) {
     let i = 0;
     let currentText = '';
-    
-    // Find where "Nicholas Cho" starts in the text
-    const highlightText = "Nicholas Cho";
-    const beforeHighlight = "Hello, I'm ";
-    
+
     if (i < text.length) {
         currentText += text.charAt(i);
-        
-        // Check if we've reached the highlight part
-        if (currentText === beforeHighlight) {
-            element.innerHTML = currentText + '<span class="highlight">' + highlightText + '</span>';
-            i = text.length; // Skip to end since we've added everything
-        } else if (i < beforeHighlight.length) {
-            element.innerHTML = currentText;
-        }
         
         i++;
         
