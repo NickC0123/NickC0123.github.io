@@ -7,23 +7,53 @@ navToggle.addEventListener('click', () => {
     navToggle.classList.toggle('active');
 });
 
-// Smooth Scrolling for Navigation Links
+// Enhanced Smooth Scrolling for Navigation Links
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
         e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
+        const targetId = this.getAttribute('href');
+        const target = document.querySelector(targetId);
+        
         if (target) {
-            const offsetTop = target.offsetTop - 70; // Account for fixed navbar
-            window.scrollTo({
-                top: offsetTop,
-                behavior: 'smooth'
-            });
+            const navbarHeight = document.querySelector('.navbar').offsetHeight;
+            const targetPosition = target.offsetTop - navbarHeight - 20; // Extra 20px padding
+            
+            // Custom smooth scroll function for better browser compatibility
+            smoothScrollTo(targetPosition, 800); // 800ms duration
         }
+        
         // Close mobile menu if open
-        navMenu.classList.remove('active');
-        navToggle.classList.remove('active');
+        if (navMenu && navToggle) {
+            navMenu.classList.remove('active');
+            navToggle.classList.remove('active');
+        }
     });
 });
+
+// Custom smooth scroll function for better control and compatibility
+function smoothScrollTo(targetPosition, duration) {
+    const startPosition = window.pageYOffset;
+    const distance = targetPosition - startPosition;
+    let startTime = null;
+
+    function animation(currentTime) {
+        if (startTime === null) startTime = currentTime;
+        const timeElapsed = currentTime - startTime;
+        const run = easeInOutQuart(timeElapsed, startPosition, distance, duration);
+        window.scrollTo(0, run);
+        if (timeElapsed < duration) requestAnimationFrame(animation);
+    }
+
+    // Easing function for smoother animation
+    function easeInOutQuart(t, b, c, d) {
+        t /= d / 2;
+        if (t < 1) return c / 2 * t * t * t * t + b;
+        t -= 2;
+        return -c / 2 * (t * t * t * t - 2) + b;
+    }
+
+    requestAnimationFrame(animation);
+}
 
 // Navbar Background on Scroll
 window.addEventListener('scroll', () => {
@@ -37,30 +67,41 @@ window.addEventListener('scroll', () => {
     }
 });
 
-// Active Navigation Link Highlighting
+// Enhanced Active Navigation Link Highlighting with smooth scrolling detection
 const sections = document.querySelectorAll('section[id]');
 const navLinks = document.querySelectorAll('.nav-link');
 
 function highlightActiveSection() {
-    const scrollPos = window.scrollY + 100;
+    const scrollPos = window.scrollY + 120; // Adjusted offset for better detection
+    let currentSection = '';
 
     sections.forEach(section => {
         const sectionTop = section.offsetTop;
         const sectionHeight = section.offsetHeight;
         const sectionId = section.getAttribute('id');
         
-        if (scrollPos >= sectionTop && scrollPos < sectionTop + sectionHeight) {
-            navLinks.forEach(link => {
-                link.classList.remove('active');
-                if (link.getAttribute('href') === `#${sectionId}`) {
-                    link.classList.add('active');
-                }
-            });
+        if (scrollPos >= sectionTop - 200 && scrollPos < sectionTop + sectionHeight - 200) {
+            currentSection = sectionId;
+        }
+    });
+
+    // Update active navigation links
+    navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === `#${currentSection}`) {
+            link.classList.add('active');
         }
     });
 }
 
-window.addEventListener('scroll', highlightActiveSection);
+// Throttle scroll events for better performance
+let scrollTimeout;
+window.addEventListener('scroll', () => {
+    if (scrollTimeout) {
+        clearTimeout(scrollTimeout);
+    }
+    scrollTimeout = setTimeout(highlightActiveSection, 10);
+});
 
 // Intersection Observer for Animations
 const observerOptions = {
@@ -257,12 +298,9 @@ function createScrollToTopButton() {
         }
     });
     
-    // Scroll to top on click
+    // Enhanced scroll to top with smooth custom animation
     scrollButton.addEventListener('click', () => {
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-        });
+        smoothScrollTo(0, 600); // Smooth scroll to top in 600ms
     });
     
     // Hover effects
