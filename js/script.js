@@ -1,12 +1,3 @@
-// Mobile Navigation Toggle
-const navToggle = document.getElementById('nav-toggle');
-const navMenu = document.getElementById('nav-menu');
-
-navToggle.addEventListener('click', () => {
-    navMenu.classList.toggle('active');
-    navToggle.classList.toggle('active');
-});
-
 // Enhanced Smooth Scrolling for Navigation Links
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
@@ -20,12 +11,6 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             
             // Custom smooth scroll function for better browser compatibility
             smoothScrollTo(targetPosition, 800); // 800ms duration
-        }
-        
-        // Close mobile menu if open
-        if (navMenu && navToggle) {
-            navMenu.classList.remove('active');
-            navToggle.classList.remove('active');
         }
     });
 });
