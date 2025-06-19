@@ -7,7 +7,7 @@
 
 html {
     scroll-behavior: smooth;
-    scroll-padding-top: 80px; /* Account for fixed navbar */
+    scroll-padding-top: 80px;
 }
 
 body {
@@ -94,20 +94,68 @@ body {
     width: 100%;
 }
 
-.nav-link.active::after {
-    width: 100%;
-}
+/* Hero Section with Parallax */
 .hero {
     min-height: 100vh;
+    position: relative;
+    overflow: hidden;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 0 20px;
+}
+
+/* Parallax Background */
+.hero-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 120%; /* Extra height for parallax movement */
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
+    z-index: -1;
+    will-change: transform;
+}
+
+/* Parallax Elements */
+.parallax-layer {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.parallax-shape {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.1;
+    background: rgba(255, 255, 255, 0.5);
+    transition: transform 0.3s ease;
+}
+
+.shape-1 {
+    width: 300px;
+    height: 300px;
+    top: 10%;
+    left: 5%;
+}
+
+.shape-2 {
+    width: 200px;
+    height: 200px;
+    top: 60%;
+    right: 10%;
+}
+
+.shape-3 {
+    width: 150px;
+    height: 150px;
+    bottom: 20%;
+    left: 50%;
 }
 
 .hero-content {
+    position: relative;
+    z-index: 1;
     max-width: 1200px;
     margin: 0 auto;
     display: flex;
@@ -115,6 +163,8 @@ body {
     align-items: center;
     text-align: center;
     gap: 3rem;
+    padding: 0 20px;
+    color: white;
 }
 
 .hero-text {
@@ -216,6 +266,7 @@ body {
 /* Section Styles */
 section {
     padding: 80px 0;
+    position: relative;
 }
 
 .section-title {
@@ -237,14 +288,29 @@ section {
     transform: translateX(-50%);
 }
 
-/* About Section */
+/* About Section with Parallax Background */
 .about {
     background: #f8f9fa;
+    position: relative;
+    overflow: hidden;
+}
+
+.about-parallax-bg {
+    position: absolute;
+    top: -50px;
+    left: 0;
+    width: 100%;
+    height: calc(100% + 100px);
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><rect fill="%23f8f9fa" width="1200" height="600"/><path fill="%23e9ecef" d="M0,300 Q300,200 600,300 T1200,300 L1200,600 L0,600 Z" opacity="0.3"/></svg>') no-repeat center;
+    background-size: cover;
+    z-index: 0;
 }
 
 .about-content {
     max-width: 800px;
     margin: 0 auto;
+    position: relative;
+    z-index: 1;
 }
 
 .about-text {
@@ -281,14 +347,27 @@ section {
     border-radius: 25px;
     font-size: 0.9rem;
     font-weight: 500;
+    transform: translateY(0);
+    transition: transform 0.3s ease;
+}
+
+.skill-tag:hover {
+    transform: translateY(-3px);
 }
 
 /* Projects Section */
+.projects {
+    position: relative;
+    overflow: hidden;
+}
+
 .projects-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 2rem;
     margin-top: 2rem;
+    position: relative;
+    z-index: 1;
 }
 
 .project-card {
@@ -310,11 +389,15 @@ section {
     display: flex;
     align-items: center;
     justify-content: center;
+    position: relative;
+    overflow: hidden;
 }
 
 .placeholder-project {
     font-size: 3rem;
     color: rgba(255, 255, 255, 0.8);
+    z-index: 1;
+    position: relative;
 }
 
 .project-content {
@@ -354,6 +437,8 @@ section {
 /* Contact Section */
 .contact {
     background: #f8f9fa;
+    position: relative;
+    overflow: hidden;
 }
 
 .contact-content {
@@ -362,6 +447,8 @@ section {
     gap: 4rem;
     max-width: 1000px;
     margin: 0 auto;
+    position: relative;
+    z-index: 1;
 }
 
 .contact-info p {
@@ -431,6 +518,74 @@ section {
     padding: 2rem 0;
 }
 
+/* Scroll to Top Button */
+.scroll-to-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    background: #3498db;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.2rem;
+    box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+    transition: all 0.3s ease;
+    opacity: 0;
+    visibility: hidden;
+    z-index: 1000;
+}
+
+.scroll-to-top.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+.scroll-to-top:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba(52, 152, 219, 0.4);
+}
+
+/* Notification Styles */
+.notification {
+    position: fixed;
+    top: 100px;
+    right: 20px;
+    padding: 15px 20px;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    z-index: 1001;
+    font-weight: 500;
+    opacity: 0;
+    transform: translateX(100%);
+    transition: all 0.3s ease;
+    max-width: 300px;
+    word-wrap: break-word;
+}
+
+.notification.success {
+    background: #27ae60;
+    color: white;
+}
+
+.notification.error {
+    background: #e74c3c;
+    color: white;
+}
+
+.notification.show {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Floating Animation */
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
     .hero-content {
@@ -470,6 +625,15 @@ section {
     .btn {
         width: 200px;
         text-align: center;
+    }
+
+    .nav-menu {
+        gap: 1rem;
+        font-size: 0.9rem;
+    }
+
+    .parallax-shape {
+        display: none;
     }
 }
 

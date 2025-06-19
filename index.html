@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -22,26 +23,35 @@
         </div>
     </nav>
 
-    <!--Hero Section-->
-        <section id="home" class="hero">
-        <div class="hero-content">
-            <h1 class="hero-title">Hello, I'm <span class="highlight">Nicholas Cho</span></h1>
-            <p class="hero-subtitle">A Computing Science Undergraduate at SFU</p>
-            <p class="hero-description">I create beautiful and functional websites that bring ideas to life.</p>
-            <div class="hero-buttons">
-                <a href="#projects" class="btn btn-primary">View My Work</a>
-                <a href="#contact" class="btn btn-secondary">Get In Touch</a>
-            </div>
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-background" data-parallax="0.5"></div>
+        <div class="parallax-layer" data-parallax="0.3">
+            <div class="parallax-shape shape-1"></div>
+            <div class="parallax-shape shape-2"></div>
+            <div class="parallax-shape shape-3"></div>
         </div>
-        <div class="hero-image">
-            <div class="placeholder-avatar">
-                <i class="fas fa-user"></i>
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1 class="hero-title">Hello, I'm <span class="highlight">Nicholas Cho</span></h1>
+                <p class="hero-subtitle">A Computing Science Undergraduate at SFU</p>
+                <p class="hero-description">I create beautiful and functional websites that bring ideas to life.</p>
+                <div class="hero-buttons">
+                    <a href="#projects" class="btn btn-primary">View My Work</a>
+                    <a href="#contact" class="btn btn-secondary">Get In Touch</a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <div class="placeholder-avatar">
+                    <i class="fas fa-user"></i>
+                </div>
             </div>
         </div>
     </section>
 
     <!-- About Section -->
     <section id="about" class="about">
+        <div class="about-parallax-bg" data-parallax="0.2"></div>
         <div class="container">
             <h2 class="section-title">About Me</h2>
             <div class="about-content">
@@ -174,11 +184,15 @@
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
-            <p>&copy; 2025 Your Name. All rights reserved.</p>
+            <p>&copy; 2025 Nicholas Cho. All rights reserved.</p>
         </div>
     </footer>
 
-    <script src="js/script.js"></script>
+    <!-- Scroll to Top Button -->
+    <button class="scroll-to-top" aria-label="Scroll to top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
 
+    <script src="js/script.js"></script>
 </body>
 </html>
