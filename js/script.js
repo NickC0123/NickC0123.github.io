@@ -218,18 +218,15 @@ function showNotification(message, type) {
 // Typing Animation for Hero Title
 function typeWriter(element, text, speed = 100) {
     let i = 0;
-    let currentText = '';
+
+    element.textContent = '';
 
     if (i < text.length) {
-        currentText += text.charAt(i);
-        
+        element.textContent += text.charAt(i);
         i++;
-        
-        if (i < text.length) {
-            setTimeout(type, speed);
-        }
+        setTimeout(type, speed);
     }
-
+    
 }
 
 window.addEventListener('load', () => {
