@@ -399,9 +399,8 @@ section {
 
 .project-image img {
     width: auto;
-    height: 80%;
-    max-width: 90%;
-    object-fit: contain;
+    height: auto;
+    object-fit: fill;
 }
 
 .placeholder-project {
